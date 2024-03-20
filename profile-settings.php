@@ -1,4 +1,5 @@
 <!-- include the header first -->
+
 <?php require_once('assets/header.php') ?>
 
 <!-- Breadcrumb -->
@@ -17,6 +18,7 @@
 		</div>
 	</div>
 </div>
+
 <!-- /Breadcrumb -->
 
 <!-- php script for saving profile settings -->
@@ -56,8 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["save-profile"])) {
 
 	// Execute the query and show feedback
 	if (mysqli_query($connect, $updateQuery)) {
-		echo '<script>alert("Profile updated successfully")</script>';
-		echo "<meta http-equiv='refresh' content='0'>";
+			// url structure    
+		   $url = '/appointease-final/profile-settings.php?page=patients&sub=profset&success=1';
+		   // js code to redirect
+		   echo "<script>window.location.href = '$url';</script>";
+		   exit();
+		// echo "<meta http-equiv='refresh' content='0'>";
+		// echo '<script>alert("Profile updated successfully")</script>';	
 	} else {
 		// If there was an error with the query, show an error message
 		echo '<script>alert("Error updating profile: ' . mysqli_error($connect) . '")</script>';
@@ -83,11 +90,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["save-profile"])) {
 			hiddenIdpicInput.value = '';
 		}
 	}
+	function resetHeader(){
+		window.location.href = '/appointease-final/profile-settings.php?page=patients&sub=profset';
+	}
 </script>
 
 <!-- Page Content -->
 <div class="content">
+
 	<div class="container-fluid">
+	<?php
+		if (isset($_GET['success']) && $_GET['success'] == 1) {
+			echo <<<HTML
+			<div id="alert-message" class="alert alert-primary alert-dismissible fade show" role="alert">
+				Profile updated successfully
+				<button type="button" onClick="resetHeader()" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			HTML;
+		}
+	?>
+	
 		<div class="row">
 			<!-- include the side profile -->
 			<!-- side profile already uses the value $result array to pass values -->

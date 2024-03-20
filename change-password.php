@@ -49,18 +49,27 @@ if (isset($_POST["change-password"])) {
 
 			// Execute the query and show feedback
 			if (mysqli_query($connect, $updateQuery)) {
-				echo '<script>alert("Password changed successfully")</script>';
+				$url = '/appointease-final/change-password.php?page=patients&sub=changepass&response=success';
+				echo "<script>window.location.href = '$url';</script>";
+				// echo '<script>alert("Password changed successfully")</script>';
 			} else {
 				// If there was an error with the query, show an error message
-				echo '<script>alert("Error updating password: ' . mysqli_error($connect) . '")</script>';
+				$url = '/appointease-final/change-password.php?page=patients&sub=changepass&response=error';
+				echo "<script>window.location.href = '$url';</script>";
+				// echo '<script>alert("Error updating password: ' . mysqli_error($connect) . '")</script>';
+				
 			}
 		} else {
 			// If new password and confirm password do not match, show an error message
-			echo '<script>alert("New password and confirm password do not match")</script>';
+			$url = '/appointease-final/change-password.php?page=patients&sub=changepass&response=noMatch';
+			echo "<script>window.location.href = '$url';</script>";
+			// echo '<script>alert("New password and confirm password do not match")</script>';
 		}
 	} else {
 		// If old password is incorrect, show an error message
-		echo '<script>alert("Old password is incorrect")</script>';
+		$url = '/appointease-final/change-password.php?page=patients&sub=changepass&response=oldIncorrect';
+		echo "<script>window.location.href = '$url';</script>";
+		// echo '<script>alert("Old password is incorrect")</script>';
 	}
 }
 ?>
@@ -80,11 +89,46 @@ if (isset($_POST["change-password"])) {
 			});
 		});
 	});
+	function resetHeader(){
+		window.location.href = '/appointease-final/change-password.php?page=patients&sub=changepass';
+	}
 </script>
 
 <!-- Page Content -->
 <div class="content">
 	<div class="container-fluid">
+		
+		<?php
+			$color = "alert-danger";
+			if (isset($_GET['response'])){
+				if($_GET['response'] == "success"){
+					$message = "Password changed successfully";
+					$color ="alert-success";
+				}else if($_GET['response'] == "error"){
+					$message  = "Error updating password (Query Failed)";
+				}
+				else if($_GET['response'] == "noMatch"){
+					"New password and confirm password do not match";
+				}
+				else if($_GET['response'] == "oldIncorrect"){
+					$message = "Old password is incorrect";
+				}
+				else{
+					$message = "Error fetching message.";
+				}
+				
+				echo "<div id=\"alert-message\" class=\"alert $color alert-dismissible fade show\" role=\"alert\">";
+				echo <<<HTML
+					$message
+					<button type="button" onClick="resetHeader()" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				HTML;
+			}
+			
+		?>
+
 		<div class="row">
 			<!-- include the side profile -->
 			<?php require_once('assets/patient-sideprofile.php') ?>
