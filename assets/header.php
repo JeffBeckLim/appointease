@@ -31,53 +31,58 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <!-- Bootstrap Timepicker CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css">
 
     <!-- Bootstrap Timepicker JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js">
+    </script>
 
     <!-- Tempus Dominus Bootstrap 4 CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css">
 
     <!-- Tempus Dominus Bootstrap 4 JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js">
+    </script>
 
 
     <script>
-        jQuery(function($) {
-            $('#add_doctor_schedule_start_time').datetimepicker({
-                format: 'HH:mm',
-                icons: {
-                    time: 'fas fa-clock'
-                },
-                useCurrent: false
-            });
+    jQuery(function($) {
+        $('#add_doctor_schedule_start_time').datetimepicker({
+            format: 'HH:mm',
+            icons: {
+                time: 'fas fa-clock'
+            },
+            useCurrent: false
         });
+    });
 
-        jQuery(function($) {
-            $('#edit_doctor_schedule_start_time').datetimepicker({
-                format: 'HH:mm',
-                icons: {
-                    time: 'fas fa-clock'
-                },
-                useCurrent: false
-            });
+    jQuery(function($) {
+        $('#edit_doctor_schedule_start_time').datetimepicker({
+            format: 'HH:mm',
+            icons: {
+                time: 'fas fa-clock'
+            },
+            useCurrent: false
         });
+    });
 
-        jQuery(function($) {
-            $('#patient_choose_booking_date').datetimepicker({
-                format: 'DD-MM-YYYY',
-                icons: {
-                    time: 'fas fa-clock'
-                },
-                useCurrent: false,
-                widgetPositioning: {
-                    horizontal: 'auto',
-                    vertical: 'bottom'
-                },
-            });
+    jQuery(function($) {
+        $('#patient_choose_booking_date').datetimepicker({
+            format: 'DD-MM-YYYY',
+            icons: {
+                time: 'fas fa-clock'
+            },
+            useCurrent: false,
+            widgetPositioning: {
+                horizontal: 'auto',
+                vertical: 'bottom'
+            },
         });
+    });
     </script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -142,13 +147,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["login"])) {
                     header("location:admin/index.php?page=dashboard");
                 }
             } else {
-
-                //return false and go back to login page after alert
-                echo '<script>alert("Wrong User Details")</script>';
+                // Incorrect credentials, set error message and reload login page
+                $_SESSION['error_message_login'] = "Username or Password is incorrect";
             }
         } else {
-            //return false and go back to login page after alert
-            echo '<script>alert("Wrong User Details")</script>';
+            // Incorrect credentials, set error message and reload login page
+            $_SESSION['error_message_login'] = "Username or Password is incorrect";
         }
     }
 }
@@ -323,66 +327,66 @@ include 'assets/calculateage.php';
 
 <!-- for cloud dialog of services in home page -->
 <style>
-    /* CSS styles */
-    .image-container {
-        position: relative;
-        display: inline-block;
-    }
+/* CSS styles */
+.image-container {
+    position: relative;
+    display: inline-block;
+}
 
-    .image-circle {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        /* Creates a circular shape */
-        overflow: hidden;
-        /* Hide overflow content */
-        border: 1px solid #ddd;
-        /* Add a border around the circle */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        /* Add a subtle shadow */
-        background-size: cover;
-        background-position: center;
-        /* Center the image within the circle */
-    }
+.image-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    /* Creates a circular shape */
+    overflow: hidden;
+    /* Hide overflow content */
+    border: 1px solid #ddd;
+    /* Add a border around the circle */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Add a subtle shadow */
+    background-size: cover;
+    background-position: center;
+    /* Center the image within the circle */
+}
 
-    .cloud-dialog {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        /* Center the cloud dialog */
-        background-color: #ffffff;
-        border: 1px solid #ccc;
-        padding: 5px;
-        max-width: 170px;
-        /* Set maximum width for the dialog */
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        /* Add a subtle shadow */
-        visibility: hidden;
-        opacity: 0;
-        transition: visibility 0s, opacity 0.3s linear;
-    }
+.cloud-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Center the cloud dialog */
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 5px;
+    max-width: 170px;
+    /* Set maximum width for the dialog */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Add a subtle shadow */
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s linear;
+}
 
-    .image-container:hover .cloud-dialog {
-        visibility: visible;
-        opacity: 1;
-    }
+.image-container:hover .cloud-dialog {
+    visibility: visible;
+    opacity: 1;
+}
 
-    .cloud-text {
-        margin: 0;
-        padding: 0;
-        text-align: left;
-        /* Center text horizontally */
-    }
+.cloud-text {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    /* Center text horizontally */
+}
 
-    /* Adjust list styling */
-    .cloud-dialog ul {
-        list-style-type: disc;
-        /* Use bullets for list items */
-        margin: 0;
-        padding-left: 20px;
-    }
+/* Adjust list styling */
+.cloud-dialog ul {
+    list-style-type: disc;
+    /* Use bullets for list items */
+    margin: 0;
+    padding-left: 20px;
+}
 </style>
 
 <body>
@@ -402,13 +406,15 @@ include 'assets/calculateage.php';
                         </span>
                     </a>
                     <a href="index-2.php?page=home" class="navbar-brand logo">
-                        <img src="assets/img/logo-with-seal.png" class="img-fluid" alt="Logo" width="201" height="52" style="object-fit: contain">
+                        <img src="assets/img/logo-with-seal.png" class="img-fluid" alt="Logo" width="201" height="52"
+                            style="object-fit: contain">
                     </a>
                 </div>
                 <div class="main-menu-wrapper">
                     <div class="menu-header">
                         <a href="index-2.php?page=home" class="menu-logo">
-                            <img src="assets/img/logo-with-seal.png" class="img-fluid" alt="Logo" width="201" height="52" style="object-fit: contain">
+                            <img src="assets/img/logo-with-seal.png" class="img-fluid" alt="Logo" width="201"
+                                height="52" style="object-fit: contain">
                         </a>
                         <a id="menu_close" class="menu-close" href="javascript:void(0);">
                             <i class="fas fa-times"></i>
@@ -421,76 +427,79 @@ include 'assets/calculateage.php';
                         <?php if (
                             isset($_SESSION['usertype']) && $_SESSION['usertype'] === 'practitioner'
                         ) : ?>
-                            <li class="has-submenu <?php echo ($_SESSION['currpage'] == 'doctor') ? "active" : '' ?>">
-                                <a href="#">Doctors <i class="fas fa-chevron-down"></i></a>
-                                <ul class="submenu">
-                                    <li <?php echo ($_SESSION['subpage'] == 'dashboard') ? "class=\"active\"" : '' ?>>
-                                        <a href="doctor-dashboard.php?page=doctor&sub=dashboard">Doctor Dashboard</a>
-                                    </li>
-                                    <li <?php echo ($_SESSION['subpage'] == 'sched') ? "class=\"active\"" : '' ?>>
-                                        <a href="schedule-timings.php?page=doctor&sub=sched">Schedule Timing</a>
-                                    </li>
-                                    <li <?php echo ($_SESSION['subpage'] == 'patients') ? "class=\"active\"" : '' ?>>
-                                        <a href="my-patients.php?page=doctor&sub=patients">Patients List</a>
-                                    </li>
-                                    <li <?php echo ($_SESSION['subpage'] == 'reviews') ? "class=\"active\"" : '' ?>>
-                                        <a href="reviews.php?page=doctor&sub=reviews">Reviews</a>
-                                    </li>
-                                    <li <?php echo ($_SESSION['subpage'] == 'profile-settings') ? "class=\"active\"" : '' ?>>
-                                        <a href="doctor-profile-settings.php?page=doctor&sub=profile-settings">Profile Settings</a>
-                                    </li>
-                                    <li <?php echo ($_SESSION['subpage'] == 'docchangepass') ? "class=\"active\"" : '' ?>>
-                                        <a href="doctor-change-password.php?page=doctor&sub=docchangepass">Change Password</a>
-                                    </li>
-                                </ul>
-                            </li>
+                        <li class="has-submenu <?php echo ($_SESSION['currpage'] == 'doctor') ? "active" : '' ?>">
+                            <a href="#">Doctors <i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li <?php echo ($_SESSION['subpage'] == 'dashboard') ? "class=\"active\"" : '' ?>>
+                                    <a href="doctor-dashboard.php?page=doctor&sub=dashboard">Doctor Dashboard</a>
+                                </li>
+                                <li <?php echo ($_SESSION['subpage'] == 'sched') ? "class=\"active\"" : '' ?>>
+                                    <a href="schedule-timings.php?page=doctor&sub=sched">Schedule Timing</a>
+                                </li>
+                                <li <?php echo ($_SESSION['subpage'] == 'patients') ? "class=\"active\"" : '' ?>>
+                                    <a href="my-patients.php?page=doctor&sub=patients">Patients List</a>
+                                </li>
+                                <li <?php echo ($_SESSION['subpage'] == 'reviews') ? "class=\"active\"" : '' ?>>
+                                    <a href="reviews.php?page=doctor&sub=reviews">Reviews</a>
+                                </li>
+                                <li
+                                    <?php echo ($_SESSION['subpage'] == 'profile-settings') ? "class=\"active\"" : '' ?>>
+                                    <a href="doctor-profile-settings.php?page=doctor&sub=profile-settings">Profile
+                                        Settings</a>
+                                </li>
+                                <li <?php echo ($_SESSION['subpage'] == 'docchangepass') ? "class=\"active\"" : '' ?>>
+                                    <a href="doctor-change-password.php?page=doctor&sub=docchangepass">Change
+                                        Password</a>
+                                </li>
+                            </ul>
+                        </li>
                         <?php endif; ?>
 
                         <!-- check if the page is in the patients -->
                         <?php if (
                             isset($_SESSION['usertype']) && $_SESSION['usertype'] === 'patient'
                         ) : ?>
-                            <li <?php echo ($_SESSION['currpage'] == 'home') ? "class=\"active\"" : '' ?>>
-                                <a href="index-2.php?page=home">Home</a>
-                            </li>
-                            <li <?php echo ($_SESSION['currpage'] == 'announcements') ? "class=\"active\"" : '' ?>>
-                                <a href="announcements.php?page=announcements">Announcements</a>
-                            </li>
-                            <li class="has-submenu <?php echo ($_SESSION['currpage'] == 'patients') ? "active" : '' ?>">
-                                <a href="#">Patients <i class="fas fa-chevron-down"></i></a>
-                                <ul class="submenu">
-                                    <li <?php echo ($_SESSION['subpage'] == 'patientinfo') ? "class=\"active\"" : '' ?>>
-                                        <a href="patient-form.php?page=patients&sub=patientinfo">Patient Information</a>
-                                    </li>
-                                    <li <?php echo ($_SESSION['subpage'] == 'patdash') ? "class=\"active\"" : '' ?>>
-                                        <a href="patient-dashboard.php?page=patients&sub=patdash">Patient Dashboard</a>
-                                    </li>
-                                    <li <?php echo ($_SESSION['subpage'] == 'searchdoc') ? "class=\"active\"" : '' ?>>
-                                        <a href="search.php?page=patients&sub=searchdoc">Services</a>
-                                    </li>
-                                    <li <?php echo ($_SESSION['subpage'] == 'profset') ? "class=\"active\"" : '' ?>>
-                                        <a href="profile-settings.php?page=patients&sub=profset">Profile Settings</a>
-                                    </li>
-                                    <li <?php echo ($_SESSION['subpage'] == 'changepass') ? "class=\"active\"" : '' ?>>
-                                        <a href="change-password.php?page=patients&sub=changepass">Change Password</a>
-                                    </li>
-                                </ul>
-                            </li>
+                        <li <?php echo ($_SESSION['currpage'] == 'home') ? "class=\"active\"" : '' ?>>
+                            <a href="index-2.php?page=home">Home</a>
+                        </li>
+                        <li <?php echo ($_SESSION['currpage'] == 'announcements') ? "class=\"active\"" : '' ?>>
+                            <a href="announcements.php?page=announcements">Announcements</a>
+                        </li>
+                        <li class="has-submenu <?php echo ($_SESSION['currpage'] == 'patients') ? "active" : '' ?>">
+                            <a href="#">Patients <i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li <?php echo ($_SESSION['subpage'] == 'patientinfo') ? "class=\"active\"" : '' ?>>
+                                    <a href="patient-form.php?page=patients&sub=patientinfo">Patient Information</a>
+                                </li>
+                                <li <?php echo ($_SESSION['subpage'] == 'patdash') ? "class=\"active\"" : '' ?>>
+                                    <a href="patient-dashboard.php?page=patients&sub=patdash">Patient Dashboard</a>
+                                </li>
+                                <li <?php echo ($_SESSION['subpage'] == 'searchdoc') ? "class=\"active\"" : '' ?>>
+                                    <a href="search.php?page=patients&sub=searchdoc">Services</a>
+                                </li>
+                                <li <?php echo ($_SESSION['subpage'] == 'profset') ? "class=\"active\"" : '' ?>>
+                                    <a href="profile-settings.php?page=patients&sub=profset">Profile Settings</a>
+                                </li>
+                                <li <?php echo ($_SESSION['subpage'] == 'changepass') ? "class=\"active\"" : '' ?>>
+                                    <a href="change-password.php?page=patients&sub=changepass">Change Password</a>
+                                </li>
+                            </ul>
+                        </li>
                         <?php endif; ?>
 
                         <!-- for pending doctors -->
                         <?php if (
                             isset($_SESSION['usertype']) && $_SESSION['usertype'] === 'register_doctor'
                         ) : ?>
-                            <li <?php echo ($_SESSION['currpage'] == 'home') ? "class=\"active\"" : '' ?>>
-                                <a href="index-2.php?page=home">Home</a>
-                            </li>
+                        <li <?php echo ($_SESSION['currpage'] == 'home') ? "class=\"active\"" : '' ?>>
+                            <a href="index-2.php?page=home">Home</a>
+                        </li>
                         <?php endif; ?>
 
                         <?php if (isset($_SESSION['usertype']) && $_SESSION['usertype'] === 'admin') : ?>
-                            <li>
-                                <a href="admin/index.php" target="_blank">Admin</a>
-                            </li>
+                        <li>
+                            <a href="admin/index.php" target="_blank">Admin</a>
+                        </li>
                         <?php endif; ?>
                         <li class="login-link">
                             <a href="login.php">Login / Signup</a>
@@ -505,27 +514,31 @@ include 'assets/calculateage.php';
                         <!-- if logged in, show user menu -->
                         <?php if (isset($_SESSION['username'])) : ?>
 
-                            <!-- User Menu -->
+                        <!-- User Menu -->
                     <li class="nav-item dropdown has-arrow logged-item">
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                             <span class="user-img">
-                                <img src="<?php echo isset($_SESSION['idpic']) ? $_SESSION['idpic'] : 'assets/uploads/idpics/default-id.png'; ?>" alt="User Image">
+                                <img src="<?php echo isset($_SESSION['idpic']) ? $_SESSION['idpic'] : 'assets/uploads/idpics/default-id.png'; ?>"
+                                    alt="User Image">
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div class="user-header">
                                 <div class="avatar avatar-sm">
-                                    <img src="<?php echo isset($_SESSION['idpic']) ? $_SESSION['idpic'] : 'assets/uploads/idpics/default-id.png'; ?>" alt="User Image" class="avatar-img rounded-circle">
+                                    <img src="<?php echo isset($_SESSION['idpic']) ? $_SESSION['idpic'] : 'assets/uploads/idpics/default-id.png'; ?>"
+                                        alt="User Image" class="avatar-img rounded-circle">
                                 </div>
                                 <div class="user-text">
                                     <?php echo "<h6>" . $_SESSION['fname'] . " " . $_SESSION['lname'] . "</h6>"; ?>
                                     <p class="text-muted mb-0"><?php echo ucfirst($_SESSION['usertype']); ?></p>
                                 </div>
                             </div>
-                            <a class="dropdown-item" href="<?php echo ($_SESSION['usertype'] === 'practitioner') ? 'doctor-dashboard.php?page=doctor&sub=dashboard' : 'patient-dashboard.php?page=patients&sub=patdash'; ?>">
+                            <a class="dropdown-item"
+                                href="<?php echo ($_SESSION['usertype'] === 'practitioner') ? 'doctor-dashboard.php?page=doctor&sub=dashboard' : 'patient-dashboard.php?page=patients&sub=patdash'; ?>">
                                 Dashboard
                             </a>
-                            <a class="dropdown-item" href="<?php echo ($_SESSION['usertype'] === 'practitioner') ? 'doctor-profile-settings.php?page=doctor&sub=profile-settings' : 'profile-settings.php?page=patients&sub=profset'; ?>">
+                            <a class="dropdown-item"
+                                href="<?php echo ($_SESSION['usertype'] === 'practitioner') ? 'doctor-profile-settings.php?page=doctor&sub=profile-settings' : 'profile-settings.php?page=patients&sub=profset'; ?>">
                                 Profile Settings
                             </a>
                             <a class="dropdown-item" href="login.php?logout" name='logout'>Logout</a>
@@ -533,14 +546,14 @@ include 'assets/calculateage.php';
                         </div>
                     </li>
 
-                <?php else : ?>
+                    <?php else : ?>
 
                     <a class="nav-link header-login" href="login.php?page=login">Login / Signup </a>
 
-                <?php endif; ?>
+                    <?php endif; ?>
 
-                <!-- /User Menu -->
-                </li>
+                    <!-- /User Menu -->
+                    </li>
                 </ul>
             </nav>
         </header>
