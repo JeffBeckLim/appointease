@@ -3,57 +3,62 @@
 
 <!-- Page Wrapper -->
 <div class="page-wrapper">
-	<div class="content container-fluid">
+    <div class="content container-fluid">
 
-		<!-- Page Header -->
-		<div class="page-header">
-			<div class="row">
-				<div class="col-sm-6 col-auto">
-					<h3 class="page-title">Appointments</h3>
-					<!-- <ul class="breadcrumb">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-6 col-auto">
+                    <h3 class="page-title">Appointments</h3>
+                    <!-- <ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
 						<li class="breadcrumb-item active">Appointments</li>
 					</ul> -->
-				</div>
-				<div class="col-sm-6 col-auto">
-					<div>
-						<form method="post" action="assets/appt_generate_csv.php">
-							<button type="submit" name="patients_generate_file" class="btn btn-rounded btn-primary float-right" style="margin: 2px;">Generate File</button>
-						</form>
-					</div>
-					<div>
-						<form method="post" action="assets/appts_generate_by_doctor_csv.php">
-							<button type="submit" name="patients_generate_file" class="btn btn-rounded btn-primary float-right" style="margin: 2px;">Generate by Doctor</button>
-						</form>
-					</div>
-					<div>
-						<a href="#choose_date" data-toggle="modal" class="btn btn-rounded btn-primary float-right" style="margin: 2px;">Generate by Date</a>
-					</div>
-				</div>
-			</div>
-		</div>
+                </div>
+                <div class="col-sm-6 col-auto">
+                    <div>
+                        <form method="post" action="assets/appt_generate_csv.php">
+                            <button type="submit" name="patients_generate_file"
+                                class="btn btn-rounded btn-primary float-right" style="margin: 2px;">Generate
+                                File</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form method="post" action="assets/appts_generate_by_doctor_csv.php">
+                            <button type="submit" name="patients_generate_file"
+                                class="btn btn-rounded btn-primary float-right" style="margin: 2px;">Generate by
+                                Doctor</button>
+                        </form>
+                    </div>
+                    <div>
+                        <a href="#choose_date" data-toggle="modal" class="btn btn-rounded btn-primary float-right"
+                            style="margin: 2px;">Generate by Date</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<!-- /Page Header -->
-		<div class="row">
-			<div class="col-md-12">
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-md-12">
 
-				<!-- Recent Orders -->
-				<div class="card">
-					<div class="card-body">
-						<div class="table-responsive">
-							<table class="datatable table table-hover table-center mb-0">
-								<thead>
-									<tr>
-										<th>Doctor Name</th>
-										<th>Consultation Type</th>
-										<th>Patient Name</th>
-										<th>Appt Date</th>
-										<th>Status</th>
-										<th class="text-center">Actions</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
+                <!-- Recent Orders -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="datatable table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Doctor Name</th>
+                                        <th>Consultation Type</th>
+                                        <th>Patient Name</th>
+                                        <th>Appt Date</th>
+                                        <th>Status</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
 									$appointmentQuery = "SELECT a.*, du.fname AS doctor_fname, du.lname AS doctor_lname, u.fname AS patient_fname, u.lname AS patient_lname
 														FROM appointments a
 														LEFT JOIN doctors d ON a.doctor_id = d.doctor_id
@@ -125,156 +130,179 @@
 									}
 									?>
 
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<!-- /Recent Orders -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Recent Orders -->
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- /Page Wrapper -->
 
 <!-- Delete Modal -->
 <div class="modal fade" id="delete_modal" aria-hidden="true" role="dialog">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-body">
-				<div class="form-content p-2">
-					<h4 class="modal-title">Delete</h4>
-					<p class="mb-4">Are you sure want to delete?</p>
-					<!-- Add an ID to the Yes button to easily target it in JavaScript -->
-					<button type="button" class="btn btn-rounded btn-primary" id="deleteAppointmentButton">Yes</button>
-					<button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">No</button>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-content p-2">
+                    <h4 class="modal-title">Delete</h4>
+                    <p class="mb-4">Are you sure want to delete?</p>
+                    <!-- Add an ID to the Yes button to easily target it in JavaScript -->
+                    <button type="button" class="btn btn-rounded btn-primary" id="deleteAppointmentButton">Yes</button>
+                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-	// Attach a click event to all elements with the class 'delete_appt'
-	$('.delete_appt').click(function() {
-		// Get the appointment ID from the data attribute of the clicked element
-		currentAppointmentId = $(this).data('appointment-id');
+$(document).ready(function() {
 
-		console.log(currentAppointmentId);
+    $(document).ready(function() {
+        // Destroy existing DataTable instance if it exists
+        if ($.fn.DataTable.isDataTable('.datatable')) {
+            $('.datatable').DataTable().destroy();
+        }
 
-		// Set the data-appointment-id attribute of the modal's 'Yes' button
-		$('#deleteAppointmentButton').data('appointment-id', currentAppointmentId);
-	});
+        // Initialize DataTables
+        $('.datatable').DataTable({
+            "order": [
+                [3, 'desc']
+            ] // Order by date
+        });
+    });
 
-	// Use class selector for the "Yes" button
-	$('#deleteAppointmentButton').click(function() {
-		// Get the appointment ID from the data-appointment-id attribute of the 'Yes' button
-		currentAppointmentId = $(this).data('appointment-id');
 
-		// Make an AJAX request to delete the appointment
-		$.ajax({
-			url: 'assets/delete_appointment.php',
-			method: 'POST',
-			data: {
-				currentAppointmentId: currentAppointmentId,
-			},
-			success: function(response) {
-				console.log(response);
+});
+</script>
 
-				// Handle the response from the server
-				alert('Appointment deleted');
 
-				// Reload the page after successful deletion
-				location.reload();
-			},
-			error: function(error) {
-				// Handle errors
-				console.error('Error deleting:', error);
-			}
-		});
-	});
+<script>
+// Attach a click event to all elements with the class 'delete_appt'
+$('.delete_appt').click(function() {
+    // Get the appointment ID from the data attribute of the clicked element
+    currentAppointmentId = $(this).data('appointment-id');
+
+    console.log(currentAppointmentId);
+
+    // Set the data-appointment-id attribute of the modal's 'Yes' button
+    $('#deleteAppointmentButton').data('appointment-id', currentAppointmentId);
+});
+
+// Use class selector for the "Yes" button
+$('#deleteAppointmentButton').click(function() {
+    // Get the appointment ID from the data-appointment-id attribute of the 'Yes' button
+    currentAppointmentId = $(this).data('appointment-id');
+
+    // Make an AJAX request to delete the appointment
+    $.ajax({
+        url: 'assets/delete_appointment.php',
+        method: 'POST',
+        data: {
+            currentAppointmentId: currentAppointmentId,
+        },
+        success: function(response) {
+            console.log(response);
+
+            // Handle the response from the server
+            alert('Appointment deleted');
+
+            // Reload the page after successful deletion
+            location.reload();
+        },
+        error: function(error) {
+            // Handle errors
+            console.error('Error deleting:', error);
+        }
+    });
+});
 </script>
 
 <!-- Choose date Modal -->
 <div class="modal fade" id="choose_date" aria-hidden="true" role="dialog">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-body">
-				<div class="form-content p-2">
-					<h4 class="modal-title">Choose Start and End Dates</h4>
-					<form id="generateCsvForm" method="post" action="assets/appts_generate_by_date_csv.php">
-						<div class="form-group">
-							<label for="start_date">Start Date:</label>
-							<input type="date" class="form-control" id="start_date" name="start_date">
-						</div>
-						<div class="form-group">
-							<label for="end_date">End Date:</label>
-							<input type="date" class="form-control" id="end_date" name="end_date">
-						</div>
-						<div class="text-center">
-							<button type="submit" class="btn btn-rounded btn-primary" id="generateCsvButton">Generate CSV</button>
-							<button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">Close</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-content p-2">
+                    <h4 class="modal-title">Choose Start and End Dates</h4>
+                    <form id="generateCsvForm" method="post" action="assets/appts_generate_by_date_csv.php">
+                        <div class="form-group">
+                            <label for="start_date">Start Date:</label>
+                            <input type="date" class="form-control" id="start_date" name="start_date">
+                        </div>
+                        <div class="form-group">
+                            <label for="end_date">End Date:</label>
+                            <input type="date" class="form-control" id="end_date" name="end_date">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-rounded btn-primary" id="generateCsvButton">Generate
+                                CSV</button>
+                            <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- /Choose date Modal -->
 
 <script>
-	// Event listener for the form submission
-	$('#generateCsvForm').submit(function(e) {
-		e.preventDefault(); // Prevent the default form submission
+// Event listener for the form submission
+$('#generateCsvForm').submit(function(e) {
+    e.preventDefault(); // Prevent the default form submission
 
-		// Retrieve the selected start and end dates from the datepicker inputs
-		var startDate = $('#start_date').val();
-		var endDate = $('#end_date').val();
+    // Retrieve the selected start and end dates from the datepicker inputs
+    var startDate = $('#start_date').val();
+    var endDate = $('#end_date').val();
 
-		// Make an AJAX request to generate the CSV file
-		$.ajax({
-			url: 'assets/appts_generate_by_date_csv.php',
-			method: 'POST',
-			data: {
-				startDate: startDate,
-				endDate: endDate
-			},
-			success: function(response) {
-				// Check if the response contains any data
-				if (response.trim() !== '') {
-					// Create a blob object from the response data
-					var blob = new Blob([response], {
-						type: 'text/csv'
-					});
+    // Make an AJAX request to generate the CSV file
+    $.ajax({
+        url: 'assets/appts_generate_by_date_csv.php',
+        method: 'POST',
+        data: {
+            startDate: startDate,
+            endDate: endDate
+        },
+        success: function(response) {
+            // Check if the response contains any data
+            if (response.trim() !== '') {
+                // Create a blob object from the response data
+                var blob = new Blob([response], {
+                    type: 'text/csv'
+                });
 
-					// Create a temporary URL for the blob object
-					var url = window.URL.createObjectURL(blob);
+                // Create a temporary URL for the blob object
+                var url = window.URL.createObjectURL(blob);
 
-					// Create a download link
-					var downloadLink = document.createElement('a');
-					downloadLink.href = url;
-					downloadLink.download = 'appointments_by_date_export.csv';
-					downloadLink.click();
+                // Create a download link
+                var downloadLink = document.createElement('a');
+                downloadLink.href = url;
+                downloadLink.download = 'appointments_by_date_export.csv';
+                downloadLink.click();
 
-					// Release the allocated memory
-					window.URL.revokeObjectURL(url);
+                // Release the allocated memory
+                window.URL.revokeObjectURL(url);
 
-					// Close the modal
-					$('#generateCsvForm').modal('hide');
+                // Close the modal
+                $('#generateCsvForm').modal('hide');
 
-					window.location.reload();
-				} else {
-					console.error('Empty response received.');
-				}
-			},
+                window.location.reload();
+            } else {
+                console.error('Empty response received.');
+            }
+        },
 
-			error: function(xhr, status, error) {
-				console.error('Error generating CSV:', error);
-			}
-		});
-	});
+        error: function(xhr, status, error) {
+            console.error('Error generating CSV:', error);
+        }
+    });
+});
 </script>
 
 

@@ -18,19 +18,25 @@
                 <div class="col-sm-9 col-auto">
                     <div>
                         <form method="post" action="assets/records_generate_csv.php">
-                            <button type="submit" name="records_generate_file" class="btn btn-rounded btn-primary float-right" style="margin: 2px;">Generate File</button>
+                            <button type="submit" name="records_generate_file"
+                                class="btn btn-rounded btn-primary float-right" style="margin: 2px;">Generate
+                                File</button>
                         </form>
                     </div>
                     <div>
                         <form method="post" action="assets/appts_generate_by_doctor_csv.php">
-                            <button type="submit" name="patients_generate_file" class="btn btn-rounded btn-primary float-right" style="margin: 2px;">Generate by Doctor</button>
+                            <button type="submit" name="patients_generate_file"
+                                class="btn btn-rounded btn-primary float-right" style="margin: 2px;">Generate by
+                                Doctor</button>
                         </form>
                     </div>
                     <div>
-                        <a href="#choose_date" data-toggle="modal" class="btn btn-rounded btn-primary float-right" style="margin: 2px;">Generate by Date</a>
+                        <a href="#choose_date" data-toggle="modal" class="btn btn-rounded btn-primary float-right"
+                            style="margin: 2px;">Generate by Date</a>
                     </div>
                     <div>
-                        <a href="#search_by_name" data-toggle="modal" class="btn btn-rounded btn-primary float-right" style="margin: 2px;">Search by Name</a>
+                        <a href="#search_by_name" data-toggle="modal" class="btn btn-rounded btn-primary float-right"
+                            style="margin: 2px;">Search by Name</a>
                     </div>
                 </div>
             </div>
@@ -75,26 +81,29 @@
                                             $patientName = $row['patient_fname'] . ' ' . $row['patient_lname'];
                                             $doctorName = $row['doctor_fname'] . ' ' . $row['doctor_lname'];
                                     ?>
-                                            <tr>
-                                                <td>
-                                                    <h2 class="table-avatar">
-                                                        <a href="#"><?php echo $recordName; ?></a>
-                                                    </h2>
-                                                </td>
-                                                <td><?php echo $patientName; ?></td>
-                                                <td><?php echo $doctorName; ?></td>
-                                                <td><?php echo $recordDate; ?></td>
-                                                <td class="text-center">
-                                                    <div class="actions">
-                                                        <a href='<?php echo '../assets/' . $row['attachment_path']; ?>' target="_blank" class='btn btn-sm bg-primary-light'>
-                                                            <i class="fas fa-eye"></i> View
-                                                        </a>
-                                                        <a data-toggle="modal" href="#delete_modal" class="btn btn-sm bg-danger-light delete_record" data-record-id='<?php echo $recordId; ?>'>
-                                                            <i class="fe fe-trash"></i> Delete
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="#"><?php echo $recordName; ?></a>
+                                            </h2>
+                                        </td>
+                                        <td><?php echo $patientName; ?></td>
+                                        <td><?php echo $doctorName; ?></td>
+                                        <td><?php echo $recordDate; ?></td>
+                                        <td class="text-center">
+                                            <div class="actions">
+                                                <a href='<?php echo '../assets/' . $row['attachment_path']; ?>'
+                                                    target="_blank" class='btn btn-sm bg-primary-light'>
+                                                    <i class="fas fa-eye"></i> View
+                                                </a>
+                                                <a data-toggle="modal" href="#delete_modal"
+                                                    class="btn btn-sm bg-danger-light delete_record"
+                                                    data-record-id='<?php echo $recordId; ?>'>
+                                                    <i class="fe fe-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     <?php
                                         }
                                     } else {
@@ -129,44 +138,44 @@
     </div>
 </div>
 <script>
-    // Attach a click event to all elements with the class 'delete_appt'
-    $('.delete_record').click(function() {
-        // Get the record ID from the data attribute of the clicked element
-        currentrecordId = $(this).data('record-id');
+// Attach a click event to all elements with the class 'delete_appt'
+$('.delete_record').click(function() {
+    // Get the record ID from the data attribute of the clicked element
+    currentrecordId = $(this).data('record-id');
 
-        console.log(currentrecordId);
+    console.log(currentrecordId);
 
-        // Set the data-record-id attribute of the modal's 'Yes' button
-        $('#deleterecordButton').data('record-id', currentrecordId);
+    // Set the data-record-id attribute of the modal's 'Yes' button
+    $('#deleterecordButton').data('record-id', currentrecordId);
+});
+
+// Use class selector for the "Yes" button
+$('#deleterecordButton').click(function() {
+    // Get the record ID from the data-record-id attribute of the 'Yes' button
+    currentrecordId = $(this).data('record-id');
+
+    // Make an AJAX request to delete the record
+    $.ajax({
+        url: 'assets/delete_record.php',
+        method: 'POST',
+        data: {
+            currentrecordId: currentrecordId,
+        },
+        success: function(response) {
+            console.log(response);
+
+            // Handle the response from the server
+            alert('Record deleted');
+
+            // Reload the page after successful deletion
+            location.reload();
+        },
+        error: function(error) {
+            // Handle errors
+            console.error('Error deleting:', error);
+        }
     });
-
-    // Use class selector for the "Yes" button
-    $('#deleterecordButton').click(function() {
-        // Get the record ID from the data-record-id attribute of the 'Yes' button
-        currentrecordId = $(this).data('record-id');
-
-        // Make an AJAX request to delete the record
-        $.ajax({
-            url: 'assets/delete_record.php',
-            method: 'POST',
-            data: {
-                currentrecordId: currentrecordId,
-            },
-            success: function(response) {
-                console.log(response);
-
-                // Handle the response from the server
-                alert('Record deleted');
-
-                // Reload the page after successful deletion
-                location.reload();
-            },
-            error: function(error) {
-                // Handle errors
-                console.error('Error deleting:', error);
-            }
-        });
-    });
+});
 </script>
 
 <!-- Choose date modal -->
@@ -186,7 +195,8 @@
                             <input type="date" class="form-control" id="end_date" name="end_date">
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-rounded btn-primary" id="generateCsvButton">Generate CSV</button>
+                            <button type="submit" class="btn btn-rounded btn-primary" id="generateCsvButton">Generate
+                                CSV</button>
                             <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </form>
@@ -196,56 +206,56 @@
     </div>
 </div>
 <script>
-    // Event listener for the form submission
-    $('#generateCsvForm').submit(function(e) {
-        e.preventDefault(); // Prevent the default form submission
+// Event listener for the form submission
+$('#generateCsvForm').submit(function(e) {
+    e.preventDefault(); // Prevent the default form submission
 
-        // Retrieve the selected start and end dates from the datepicker inputs
-        var startDate = $('#start_date').val();
-        var endDate = $('#end_date').val();
+    // Retrieve the selected start and end dates from the datepicker inputs
+    var startDate = $('#start_date').val();
+    var endDate = $('#end_date').val();
 
-        // Make an AJAX request to generate the CSV file
-        $.ajax({
-            url: 'assets/records_generate_by_date_csv.php',
-            method: 'POST',
-            data: {
-                startDate: startDate,
-                endDate: endDate
-            },
-            success: function(response) {
-                // Check if the response contains any data
-                if (response.trim() !== '') {
-                    // Create a blob object from the response data
-                    var blob = new Blob([response], {
-                        type: 'text/csv'
-                    });
+    // Make an AJAX request to generate the CSV file
+    $.ajax({
+        url: 'assets/records_generate_by_date_csv.php',
+        method: 'POST',
+        data: {
+            startDate: startDate,
+            endDate: endDate
+        },
+        success: function(response) {
+            // Check if the response contains any data
+            if (response.trim() !== '') {
+                // Create a blob object from the response data
+                var blob = new Blob([response], {
+                    type: 'text/csv'
+                });
 
-                    // Create a temporary URL for the blob object
-                    var url = window.URL.createObjectURL(blob);
+                // Create a temporary URL for the blob object
+                var url = window.URL.createObjectURL(blob);
 
-                    // Create a download link
-                    var downloadLink = document.createElement('a');
-                    downloadLink.href = url;
-                    downloadLink.download = 'records_by_date_export.csv';
-                    downloadLink.click();
+                // Create a download link
+                var downloadLink = document.createElement('a');
+                downloadLink.href = url;
+                downloadLink.download = 'records_by_date_export.csv';
+                downloadLink.click();
 
-                    // Release the allocated memory
-                    window.URL.revokeObjectURL(url);
+                // Release the allocated memory
+                window.URL.revokeObjectURL(url);
 
-                    // Close the modal
-                    $('#generateCsvForm').modal('hide');
+                // Close the modal
+                $('#generateCsvForm').modal('hide');
 
-                    window.location.reload();
-                } else {
-                    console.error('Empty response received.');
-                }
-            },
-
-            error: function(xhr, status, error) {
-                console.error('Error generating CSV:', error);
+                window.location.reload();
+            } else {
+                console.error('Empty response received.');
             }
-        });
+        },
+
+        error: function(xhr, status, error) {
+            console.error('Error generating CSV:', error);
+        }
     });
+});
 </script>
 <!-- /Choose date modal -->
 
@@ -259,7 +269,8 @@
                     <form id="searchByNameForm">
                         <div class="form-group">
                             <label for="name">Name:</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter the patient's first name or surname">
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Enter the patient's first name or surname">
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-rounded btn-primary">Search</button>
@@ -273,34 +284,45 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        // Event listener for the form submission
-        $('#searchByNameForm').submit(function(e) {
-            e.preventDefault(); // Prevent the default form submission
+$(document).ready(function() {
+    // Event listener for the form submission
+    $('#searchByNameForm').submit(function(e) {
+        e.preventDefault(); // Prevent the default form submission
 
-            // Retrieve the name input value
-            var name = $('#name').val();
+        // Retrieve the name input value
+        var name = $('#name').val();
 
-            // Make an AJAX request to search by name
-            $.ajax({
-                url: 'assets/search_by_name.php',
-                method: 'POST',
-                data: {
-                    name: name
-                },
-                success: function(response) {
-                    // Update the table content with the response
-                    $('.table-responsive').html(response);
+        // Make an AJAX request to search by name
+        $.ajax({
+            url: 'assets/search_by_name.php',
+            method: 'POST',
+            data: {
+                name: name
+            },
+            success: function(response) {
+                // Update the table content with the response
+                $('.table-responsive').html(response);
 
-                    // Close the modal
-                    $('#search_by_name').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error finding name:', error);
-                }
-            });
+                // Close the modal
+                $('#search_by_name').modal('hide');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error finding name:', error);
+            }
         });
     });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+    if ($.fn.DataTable.isDataTable('.datatable')) {
+        $('.datatable').DataTable().destroy();
+    }
+    $('.datatable').DataTable({
+
+    });
+});
 </script>
 <!-- /Search by name modal -->
 

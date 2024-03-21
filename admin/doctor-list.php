@@ -3,43 +3,44 @@
 
 <!-- Page Wrapper -->
 <div class="page-wrapper">
-	<div class="content container-fluid">
+    <div class="content container-fluid">
 
-		<!-- Page Header -->
-		<div class="page-header">
-			<div class="row">
-				<div class="col-sm-7 col-auto">
-					<h3 class="page-title">List of Doctors</h3>
-					<!-- <ul class="breadcrumb">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-7 col-auto">
+                    <h3 class="page-title">List of Doctors</h3>
+                    <!-- <ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
 						<li class="breadcrumb-item active">Doctor</li>
 					</ul> -->
-				</div>
-				<div class="col-sm-5 col">
-					<form method="post" action="assets/doctors_generate_csv.php">
-						<button type="submit" name="doctor_generate_file" class="btn btn-rounded btn-primary float-right mt-2">Generate File</button>
-					</form>
-				</div>
-			</div>
-		</div>
-		<!-- /Page Header -->
+                </div>
+                <div class="col-sm-5 col">
+                    <form method="post" action="assets/doctors_generate_csv.php">
+                        <button type="submit" name="doctor_generate_file"
+                            class="btn btn-rounded btn-primary float-right mt-2">Generate File</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
 
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="card">
-					<div class="card-body">
-						<div class="table-responsive">
-							<table class="datatable table table-hover table-center mb-0">
-								<thead>
-									<tr>
-										<th>Doctor Name</th>
-										<th>Services</th>
-										<th>Reviews</th>
-										<th class="text-center">Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="datatable table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Doctor Name</th>
+                                        <th>Services</th>
+                                        <th>Reviews</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
 									if (!$connect) {
 										die("Connection failed: " . mysqli_connect_error());
 									}
@@ -115,73 +116,84 @@
 										echo '<tr><td colspan="4" class="text-center">Error fetching data: ' . mysqli_error($connect) . '</td></tr>';
 									}
 									?>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	</div>
+    </div>
 </div>
 <!-- /Page Wrapper -->
 
 <!-- Delete Modal -->
 <div class="modal fade" id="delete_modal" aria-hidden="true" role="dialog">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-body">
-				<div class="form-content p-2">
-					<h4 class="modal-title">Delete</h4>
-					<p class="mb-4">Are you sure want to delete?</p>
-					<button type="button" class="btn btn-rounded btn-primary" id="deleteDoctorButton">Yes </button>
-					<button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">No</button>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-content p-2">
+                    <h4 class="modal-title">Delete</h4>
+                    <p class="mb-4">Are you sure want to delete?</p>
+                    <button type="button" class="btn btn-rounded btn-primary" id="deleteDoctorButton">Yes </button>
+                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script>
+$(document).ready(function() {
+    if ($.fn.DataTable.isDataTable('.datatable')) {
+        $('.datatable').DataTable().destroy();
+    }
+    $('.datatable').DataTable({
+
+    });
+});
+</script>
+
 <!-- /Delete Modal -->
 <script>
-	// Attach a click event to all elements with the class 'delete_appt'
-	$('.delete_doctor').click(function() {
-		// Get the appointment ID from the data attribute of the clicked element
-		currentDoctorId = $(this).data('doctor-id');
+// Attach a click event to all elements with the class 'delete_appt'
+$('.delete_doctor').click(function() {
+    // Get the appointment ID from the data attribute of the clicked element
+    currentDoctorId = $(this).data('doctor-id');
 
-		console.log(currentDoctorId);
+    console.log(currentDoctorId);
 
-		// Set the data-appointment-id attribute of the modal's 'Yes' button
-		$('#deleteDoctorButton').data('doctor-id', currentDoctorId);
-	});
+    // Set the data-appointment-id attribute of the modal's 'Yes' button
+    $('#deleteDoctorButton').data('doctor-id', currentDoctorId);
+});
 
-	// Use class selector for the "Yes" button
-	$('#deleteDoctorButton').click(function() {
-		// Get the appointment ID from the data-appointment-id attribute of the 'Yes' button
-		currentDoctorId = $(this).data('doctor-id');
+// Use class selector for the "Yes" button
+$('#deleteDoctorButton').click(function() {
+    // Get the appointment ID from the data-appointment-id attribute of the 'Yes' button
+    currentDoctorId = $(this).data('doctor-id');
 
-		// Make an AJAX request to delete the appointment
-		$.ajax({
-			url: 'assets/delete_doctor.php',
-			method: 'POST',
-			data: {
-				currentDoctorId: currentDoctorId,
-			},
-			success: function(response) {
-				console.log(response);
+    // Make an AJAX request to delete the appointment
+    $.ajax({
+        url: 'assets/delete_doctor.php',
+        method: 'POST',
+        data: {
+            currentDoctorId: currentDoctorId,
+        },
+        success: function(response) {
+            console.log(response);
 
-				// Handle the response from the server
-				alert('Doctor deleted');
+            // Handle the response from the server
+            alert('Doctor deleted');
 
-				// Reload the page after successful deletion
-				location.reload();
-			},
-			error: function(error) {
-				// Handle errors
-				console.error('Error deleting:', error);
-			}
-		});
-	});
+            // Reload the page after successful deletion
+            location.reload();
+        },
+        error: function(error) {
+            // Handle errors
+            console.error('Error deleting:', error);
+        }
+    });
+});
 </script>
 </div>
 <!-- /Main Wrapper -->
