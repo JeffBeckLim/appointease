@@ -3,45 +3,46 @@
 
 <!-- Page Wrapper -->
 <div class="page-wrapper">
-	<div class="content container-fluid">
+    <div class="content container-fluid">
 
-		<!-- Page Header -->
-		<div class="page-header">
-			<div class="row">
-				<div class="col-sm-7 col-auto">
-					<h3 class="page-title">Reviews</h3>
-					<!-- <ul class="breadcrumb">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-7 col-auto">
+                    <h3 class="page-title">Reviews</h3>
+                    <!-- <ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
 						<li class="breadcrumb-item active">Reviews</li>
 					</ul> -->
-				</div>
-				<div class="col-sm-5 col">
-					<form method="post" action="assets/reviews_generate_csv.php">
-						<button type="submit" name="reviews_generate_file" class="btn btn-rounded btn-primary float-right mt-2">Generate File</button>
-					</form>
-				</div>
-			</div>
-		</div>
-		<!-- /Page Header -->
+                </div>
+                <div class="col-sm-5 col">
+                    <form method="post" action="assets/reviews_generate_csv.php">
+                        <button type="submit" name="reviews_generate_file"
+                            class="btn btn-rounded btn-primary float-right mt-2">Generate File</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
 
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="card">
-					<div class="card-body">
-						<div class="table-responsive">
-							<table class="datatable table table-hover table-center mb-0">
-								<thead>
-									<tr>
-										<th>Patient Name</th>
-										<th>Doctor Name</th>
-										<th>Ratings</th>
-										<th>Description</th>
-										<th>Date</th>
-										<th class="text-center">Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="datatable table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Patient Name</th>
+                                        <th>Doctor Name</th>
+                                        <th>Ratings</th>
+                                        <th>Description</th>
+                                        <th>Date</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
 									// SQL query to fetch reviews with patient and doctor names
 									$reviewsQuery = "SELECT r.*, p.fname AS patient_fname, p.lname AS patient_lname, d.fname AS doctor_fname, d.lname AS doctor_lname, r.review_date
 													FROM reviews r
@@ -101,74 +102,85 @@
 										echo '<tr><td colspan="6" class="text-center">Error fetching reviews: ' . mysqli_error($connect) . '</td></tr>';
 									}
 									?>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /Page Wrapper -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Wrapper -->
 
 
-	<!-- Delete Modal -->
-	<div class="modal fade" id="delete_modal" aria-hidden="true" role="dialog">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-body">
-					<div class="form-content p-2">
-						<h4 class="modal-title">Delete</h4>
-						<p class="mb-4">Are you sure want to delete?</p>
-						<!-- Add an ID to the Yes button to easily target it in JavaScript -->
-						<button type="button" class="btn btn-rounded btn-primary" id="deleteReviewButton">Yes</button>
-						<button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">No</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="delete_modal" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-content p-2">
+                        <h4 class="modal-title">Delete</h4>
+                        <p class="mb-4">Are you sure want to delete?</p>
+                        <!-- Add an ID to the Yes button to easily target it in JavaScript -->
+                        <button type="button" class="btn btn-rounded btn-primary" id="deleteReviewButton">Yes</button>
+                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-	// Attach a click event to all elements with the class 'delete_review'
-	$('.delete_review').click(function() {
-		// Get the review ID from the data attribute of the clicked element
-		currentReviewId = $(this).data('review-id');
+// Attach a click event to all elements with the class 'delete_review'
+$('.delete_review').click(function() {
+    // Get the review ID from the data attribute of the clicked element
+    currentReviewId = $(this).data('review-id');
 
-		console.log(currentReviewId);
+    console.log(currentReviewId);
 
-		// Set the data-review-id attribute of the modal's 'Yes' button
-		$('#deleteReviewButton').data('review-id', currentReviewId);
-	});
+    // Set the data-review-id attribute of the modal's 'Yes' button
+    $('#deleteReviewButton').data('review-id', currentReviewId);
+});
 
-	// Use class selector for the "Yes" button
-	$('#deleteReviewButton').click(function() {
-		// Get the review ID from the data-review-id attribute of the 'Yes' button
-		currentReviewId = $(this).data('review-id');
+// Use class selector for the "Yes" button
+$('#deleteReviewButton').click(function() {
+    // Get the review ID from the data-review-id attribute of the 'Yes' button
+    currentReviewId = $(this).data('review-id');
 
-		// Make an AJAX request to delete the review
-		$.ajax({
-			url: 'assets/delete_reviews.php',
-			method: 'POST',
-			data: {
-				currentReviewId: currentReviewId,
-			},
-			success: function(response) {
-				console.log(response);
+    // Make an AJAX request to delete the review
+    $.ajax({
+        url: 'assets/delete_reviews.php',
+        method: 'POST',
+        data: {
+            currentReviewId: currentReviewId,
+        },
+        success: function(response) {
+            console.log(response);
 
-				// Handle the response from the server
-				alert('Review deleted');
+            // Handle the response from the server
+            alert('Review deleted');
 
-				// Reload the page after successful deletion
-				location.reload();
-			},
-			error: function(error) {
-				// Handle errors
-				console.error('Error deleting:', error);
-			}
-		});
-	});
+            // Reload the page after successful deletion
+            location.reload();
+        },
+        error: function(error) {
+            // Handle errors
+            console.error('Error deleting:', error);
+        }
+    });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+    if ($.fn.DataTable.isDataTable('.datatable')) {
+        $('.datatable').DataTable().destroy();
+    }
+    $('.datatable').DataTable({
+
+    });
+});
 </script>
 <!-- /Delete Modal -->
 
