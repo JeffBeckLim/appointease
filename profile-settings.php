@@ -58,8 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["save-profile"])) {
 
 	// Execute the query and show feedback
 	if (mysqli_query($connect, $updateQuery)) {
-			// url structure    
-		   $url = '/appointease-final/profile-settings.php?page=patients&sub=profset&success=1';
+		   $url = $_SERVER['PHP_SELF'].'?page=patients&sub=profset&success=1';
 		   // js code to redirect
 		   echo "<script>window.location.href = '$url';</script>";
 		   exit();
@@ -91,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["save-profile"])) {
 		}
 	}
 	function resetHeader(){
-		window.location.href = '/appointease-final/profile-settings.php?page=patients&sub=profset';
+		window.location.href = '<?php $_SERVER['PHP_SELF']?>' + '?page=patients&sub=profset';
 	}
 </script>
 
