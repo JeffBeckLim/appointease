@@ -1,6 +1,5 @@
 <!-- include the header first -->
 <?php require_once('assets/header.php') ?>
-
 <!-- Page Wrapper -->
 <div class="page-wrapper">
     <div class="content container-fluid">
@@ -343,7 +342,7 @@ $(document).ready(function() {
         $('.datatable').DataTable().destroy();
     }
     $('.datatable').DataTable({
-
+        sorting: true // Enable sorting
     });
 });
 </script>
