@@ -8,21 +8,26 @@
         <!-- Page Header -->
         <div class="page-header">
             <div class="row">
-                <div class="col-sm-7 col-auto">
+                <div class="col-md-7">
                     <h3 class="page-title">List of Doctors</h3>
-                    <!-- <ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-						<li class="breadcrumb-item active">Doctor</li>
-					</ul> -->
                 </div>
-                <div class="col-sm-5 col">
-                    <form method="post" action="assets/doctors_generate_csv.php">
-                        <button type="submit" name="doctor_generate_file"
-                            class="btn btn-rounded btn-primary float-right mt-2">Generate File</button>
-                    </form>
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-md-7 d-flex justify-content-end align-content-end">
+                            <a href="doctor-list-archived.php?page=doctor-list-archived"
+                                class="btn btn-rounded btn-info mt-2">Retired Doctors</a>
+                        </div>
+                        <div class="col-md-5 d-flex justify-content-start align-content-start">
+                            <form method="post" action="assets/doctors_generate_csv.php">
+                                <button type="submit" name="doctor_generate_file"
+                                    class="btn btn-rounded btn-primary float-right mt-2">Generate File</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
         <!-- /Page Header -->
 
         <div class="row">
@@ -35,6 +40,7 @@
                                     <tr>
                                         <th>Doctor Name</th>
                                         <th>Services</th>
+                                        <th>Status</th>
                                         <th>Reviews</th>
                                         <th class="text-center">Action</th>
                                     </tr>
@@ -78,13 +84,18 @@
 
 													// Display doctor information in the HTML table
 													echo "<tr>";
+
 													echo "<td>";
 													echo "<h2 class='table-avatar'>";
 													echo "<a href='profile.php?doctor_id=$doctorId'>$fname $lname</a>";
 													echo "</h2>";
 													echo "</td>";
+
 													echo "<td>$doctorSpecialties</td>";
+
+													echo "<td class='text-success'>Active</td>";
 													echo "<td>";
+													
 													// Display stars based on the average rating
 													for ($i = 1; $i <= 5; $i++) {
 														if ($i <= $averageRating) {
@@ -94,16 +105,20 @@
 														}
 													}
 													echo "</td>";
+
 													echo "<td class='text-center'>";
 													echo "<div class='actions'>";
 													echo "<a class='btn btn-sm bg-info-light' href='profile.php?doctor_id=$doctorId'>";
 													echo "<i class='fe fe-pencil'></i> Edit";
 													echo "</a>&nbsp;";
-													echo "<a class='btn btn-sm bg-danger-light delete_doctor' data-toggle='modal' href='#delete_modal' data-doctor-id='$doctorId'>";
-													echo "<i class='fe fe-trash'></i> Delete";
+													echo "<a class='btn btn-sm bg-warning-light delete_doctor' data-toggle='modal' href='#delete_modal' data-doctor-id='$doctorId'>";
+													echo "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-archive' viewBox='0 0 16 16'>
+													<path d='M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5zm13-3H1v2h14zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5'/>
+												  </svg> Archive";
 													echo "</a>";
 													echo "</div>";
 													echo "</td>";
+													
 													echo "</tr>";
 												} else {
 													// Handle error if the review query fails
@@ -134,8 +149,8 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="form-content p-2">
-                    <h4 class="modal-title">Delete</h4>
-                    <p class="mb-4">Are you sure want to delete?</p>
+                    <h4 class="modal-title">Archive</h4>
+                    <p class="mb-4">Click yes if the doctor is retired</p>
                     <button type="button" class="btn btn-rounded btn-primary" id="deleteDoctorButton">Yes </button>
                     <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">No</button>
                 </div>
@@ -183,14 +198,14 @@ $('#deleteDoctorButton').click(function() {
             console.log(response);
 
             // Handle the response from the server
-            alert('Doctor deleted');
+            alert('Doctor Archived');
 
             // Reload the page after successful deletion
             location.reload();
         },
         error: function(error) {
             // Handle errors
-            console.error('Error deleting:', error);
+            console.error('Error updating status:', error);
         }
     });
 });
