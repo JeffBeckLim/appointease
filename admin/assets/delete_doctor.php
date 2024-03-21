@@ -18,7 +18,7 @@ if (isset($_POST['currentDoctorId'])) {
     $stmtUser = mysqli_prepare($connect, $updateUserQuery);
 
     // Prepare and execute the update query for doctors table using parameter binding
-    $updateDoctorQuery = "UPDATE doctors SET doctor_status = 'Inactive' WHERE doctor_id = ?";
+    $updateDoctorQuery = "UPDATE doctors SET doctor_status = 'Retired' WHERE doctor_id = ?";
     $stmtDoctor = mysqli_prepare($connect, $updateDoctorQuery);
 
     if ($stmtUser && $stmtDoctor) {
