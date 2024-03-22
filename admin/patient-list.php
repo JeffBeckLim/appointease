@@ -15,20 +15,36 @@
                 <li class="breadcrumb-item active">Patient</li>
             </ul> -->
                 </div>
-                <div class="col-sm-5 col">
-                    <div class="mt-2">
-                        <form method="post" action="assets/patients_generate_by_appt_csv.php">
-                            <button type="submit" name="patients_generate_file"
-                                class="btn btn-rounded btn-primary float-right" style="margin: 5px;">Generate by
-                                Appointments</button>
-                        </form>
+
+                <div class="col-sm-5 col d-flex justify-content-end align-content-end">
+                    <div class="col-sm-6 col-auto d-flex justify-content-end align-content-end">
+                        <div class="dropdown show">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Generate Report
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <form method="post" action="assets/patients_generate_by_appt_csv.php">
+                                    <button type="submit" name="patients_generate_file"
+                                        class="bg-white border-bottom border-bottom-1 fw-5 btn"
+                                        style="text-align: left !important;">Generate
+                                        by
+                                        Appointments</button>
+                                </form>
+                                <form method="post" action="assets/patients_generate_csv.php">
+                                    <button type="submit" name="patients_generate_file"
+                                        class="bg-white border-0 fw-5 btn text-start">Generate
+                                        File</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-2">
-                        <form method="post" action="assets/patients_generate_csv.php">
-                            <button type="submit" name="patients_generate_file"
-                                class="btn btn-rounded btn-primary float-right" style="margin: 5px;">Generate
-                                File</button>
-                        </form>
+
+                    </div>
+                    <div class="mt-2">
+
                     </div>
                 </div>
             </div>

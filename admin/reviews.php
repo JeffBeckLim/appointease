@@ -18,7 +18,8 @@
                 <div class="col-sm-5 col">
                     <form method="post" action="assets/reviews_generate_csv.php">
                         <button type="submit" name="reviews_generate_file"
-                            class="btn btn-rounded btn-primary float-right mt-2">Generate File</button>
+                            class="btn btn-rounded btn-primary float-right mt-2"
+                            style="border-radius: 10px !important">Generate Report</button>
                     </form>
                 </div>
             </div>

@@ -13,14 +13,17 @@
                 </div>
                 <div class="col-md-5">
                     <div class="row">
-                        <div class="col-md-7 d-flex justify-content-end align-content-end">
+                        <div class="col-md-8 d-flex justify-content-end align-content-end">
                             <a href="doctor-list-archived.php?page=doctor-list-archived"
-                                class="btn btn-rounded btn-info mt-2">Retired Doctors</a>
+                                class="btn btn-rounded btn-info mt-2"
+                                style="border-radius: 10px !important; margin-right: -20px;">Retired
+                                Doctors</a>
                         </div>
-                        <div class="col-md-5 d-flex justify-content-start align-content-start">
+                        <div class="col-md-4 d-flex justify-content-end align-content-end">
                             <form method="post" action="assets/doctors_generate_csv.php">
                                 <button type="submit" name="doctor_generate_file"
-                                    class="btn btn-rounded btn-primary float-right mt-2">Generate File</button>
+                                    class="btn btn-rounded btn-primary float-right mt-2"
+                                    style="border-radius: 10px !important">Generate Report</button>
                             </form>
                         </div>
                     </div>
