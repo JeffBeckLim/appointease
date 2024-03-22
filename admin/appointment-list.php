@@ -15,24 +15,31 @@
 						<li class="breadcrumb-item active">Appointments</li>
 					</ul> -->
                 </div>
-                <div class="col-sm-6 col-auto">
-                    <div>
-                        <form method="post" action="assets/appt_generate_csv.php">
-                            <button type="submit" name="patients_generate_file"
-                                class="btn btn-rounded btn-primary float-right" style="margin: 2px;">Generate
-                                File</button>
-                        </form>
-                    </div>
-                    <div>
-                        <form method="post" action="assets/appts_generate_by_doctor_csv.php">
-                            <button type="submit" name="patients_generate_file"
-                                class="btn btn-rounded btn-primary float-right" style="margin: 2px;">Generate by
-                                Doctor</button>
-                        </form>
-                    </div>
-                    <div>
-                        <a href="#choose_date" data-toggle="modal" class="btn btn-rounded btn-primary float-right"
-                            style="margin: 2px;">Generate by Date</a>
+                <div class="col-sm-6 col-auto d-flex justify-content-end align-content-end">
+                    <div class="dropdown show">
+                        <a class="btn btn-secondary dropdown-toggle " href="#" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Generate Report
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <form method="post" action="assets/appt_generate_csv.php">
+                                <button type="submit" name="patients_generate_file"
+                                    class="bg-white border-bottom w-100 border-bottom-1 fw-4 btn text-start"
+                                    style="text-align:left; ">Generate
+                                    File</button>
+                            </form>
+                            <form method="post" action="assets/appts_generate_by_doctor_csv.php">
+                                <button type="submit" name="patients_generate_file"
+                                    class="bg-white border-bottom w-100 border-bottom-1 fw-4 btn text-start"
+                                    style="text-align: left;">Generate by
+                                    Doctor</button>
+                            </form>
+                            <a href="#choose_date" data-toggle="modal"
+                                class="bg-white w-100 border-0 fw-4 btn text-start" style="text-align: left;">Generate
+                                by
+                                Date</a>
+                        </div>
                     </div>
                 </div>
             </div>

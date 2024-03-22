@@ -61,7 +61,7 @@
                                                 echo "<tr>";
                                                 echo "<td><a href='profile.php?doctor_id=$doctorId'>$fname $lname</a></td>";
                                                 echo "<td>$doctorSpecialties</td>";
-                                                echo "<td>Retired</td>";
+                                                echo "<td class='text-danger'>Retired</td>";
                                                 echo "</tr>";
                                             }
                                         }
